@@ -90,3 +90,5 @@ _G.dangeru.list = function(board, length, callback) {
  * @param {object} resp - The object representing the response of the sever
  * @param {number} code - The HTTP response code.
  */
+
+//Also fuck Github. Fuck them for fucking flagging my fucking account. Jesus fucking christ.
