@@ -8,3 +8,7 @@ Credit: prefetcher
 
 **dangeru.js**
 Credit: iowa
+
+
+**dangeru.clj**
+Credit: kudo-mirei
