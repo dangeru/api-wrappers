@@ -1,0 +1,3 @@
+# Introduction to dangeru-clj
+
+This is just a clojure wrapper for the [Danger/u/](https://dangeru.us) API. As such, this file only covers how to use the clojure library. If you have any questions about how to use the API after reading this, consult [the official guide](https://github.com/naomiEve/dangeruAPI)
