@@ -4,16 +4,16 @@
 
 (deftest index-test
   (testing "index" 
-    ;; There are more than 5 threads on /u/, so these should be different
-    (is (not= (dangeru/index "u" 5)(dangeru/index "u" 6)))
+    ;; There are more than 20 threads on /u/, so these should be different
+    (is (not= (dangeru/index "u")(dangeru/index "u" 1)))
     ;; However, the board's name and url shouldn't change
-    (is (= (:board (dangeru/index "u" 5)(dangeru/index "u" 6))))
+    (is (= (:board (nth 0 (dangeru/index "u")) (nth 1 (dangeru/index "u" 6)))))
     ;; Make sure that we're getting /u/ when we ask for /u/
-    (is (= (:name (first (:board (dangeru/index "u" 5))))) "/u/")
+    (is (= (:board (dangeru/index "u" 0))))
     ;; Make sure we can request other boards
-    (is (not= (dangeru/index "u" 5)(dangeru/index "new" 5)))
+    (is (not= (dangeru/index "u")(dangeru/index "new")))
     ;; Make sure we're actually getting other boards when we request them
-    (is (not= (dangeru/index "new" 5) nil))))
+    (is (not= (dangeru/index "new") nil))))
 
 (deftest thread-test
   (testing "thread"

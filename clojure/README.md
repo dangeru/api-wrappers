@@ -1,6 +1,6 @@
 # dangeru-clj
 
-A clojure wrapper for the danger/u/ API
+A clojure wrapper for the danger/u/ 2.0 API
 
 # Requirements:
 
@@ -14,11 +14,16 @@ To use this with an older version of any of the above, modify project.clj and kn
 # Functions:
 
 ```clojure
-(dangeru/index boardname length)
+(dangeru/index boardname)
+(dangeru/index boardname page)
 ```
 
 ```clojure
-(dangeru/thread boardname length threadid)
+(dangeru/thread-replies threadid)
+```
+
+```clojure
+(dangeru/thread-metadata threadid)
 ```
 
 # Usage
@@ -30,20 +35,20 @@ To use this with an older version of any of the above, modify project.clj and kn
   (:require [dangeru-clj.dangeru :as dangeru]))
 ```
 
-**Getting the last 5 threads on /u/**
+**Getting the last 20 threads on /u/**
 ```clojure
-(dangeru/index "u" 5)
+(dangeru/index "u" 0)
 ```
 
-**Getting the first five posts from a thread**
+**Getting the replies to a thread**
 ```clojure
-(dangeru/thread "u" 5 1000)
+(dangeru/thread-replies 1000)
 ```
 
 # Additional resources
 
 [![Clojars Project](https://img.shields.io/clojars/v/dangeru-clj.svg)](https://clojars.org/dangeru-clj)  
-[Official API Guide](https://github.com/naomiEve/dangeruAPI)  
+[Official API Guide](https://github.com/dangeru/awoo-API)  
 [C# Wrapper](https://github.com/Mark9870/dangeru-net)  
 [Other Wrappers (soon to include this one)](https://github.com/dangeru/api-wrappers)  
 [Danger/u/](https://dangeru.us/)  
