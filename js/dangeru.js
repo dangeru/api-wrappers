@@ -13,74 +13,103 @@ if (typeof window !== "undefined") {
 _G.dangeru = {}
 
 /**
- * Gets a thread synchronously. Duh. DON'T USE THIS IN THE MAIN THREAD, YOU FUCKING DOLT!
- * @param {string} board - The board.
- * @param {number} length - How many entries to get.
+ * This method is deprecated. Use threadRepliesSync
+ * @param {string} board - unused
+ * @param {number} length - unused
  * @param {number} id - ID of the thread.
- * @returns {object} The posts and all. Dunno much more to describe this.
+ * @returns {array} The posts and all. Dunno much more to describe this.
 */
 _G.dangeru.threadSync = function(board, length, id) {
-	if (typeof board !== "string" || typeof length !== "number" || typeof id !== "string")
-		throw "Invalid type! Check your arguments, faggot.";
+    if (typeof board !== "string" || typeof length !== "number" || typeof id !== "string")
+	throw "Invalid type! Check your arguments, faggot.";
+    return _G.dangeru.threadRepliesSync(id);
+};
+/**
+ * Gets a thread synchronously. Duh. DON'T USE THIS IN THE MAIN THREAD, YOU FUCKING DOLT!
+ * @param {number} id - ID of the thread.
+ * @returns {array} The posts and all. Dunno much more to describe this.
+*/
+_G.dangeru.threadRepliesSync = function(id) {
+    if (typeof id !== "string") throw "Invalid type! Check your arguments, faggot.";
     var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open( "GET",`https://boards.dangeru.us/api.php?type=thread&board=${board}&ln=${length}&id=${id}`, false ); 
-    xmlHttp.send( null );
-    return JSON.parse(xmlHttp.responseText.replace(/[\r\n]+/g, ""));
+    xmlHttp.open("GET", "https://boards.dangeru.us/api/v2/thread/" + id.toString() + "/replies", false ); 
+    xmlHttp.send(null);
+    return [xmlHttp.status == 200 ? "success" : "error", JSON.parse(xmlHttp.responseText), xmlHttp.status];
+};
+/**
+ * Gets the metadata for an OP synchronously.
+ * @param {number} id - ID of the thread.
+ * @returns {object} The metadata entry for the post
+*/
+_G.dangeru.threadMetadataSync = function(id) {
+    if (typeof id !== "string") throw "Invalid type! Check your arguments, faggot.";
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "https://boards.dangeru.us/api/v2/thread/" + id.toString() + "/metadata", false ); 
+    xmlHttp.send(null);
+    return [xmlHttp.status == 200 ? "success" : "error", JSON.parse(xmlHttp.responseText), xmlHttp.status];
 };
 
 /**
- * Gets a thread asynchronously.
- * @param {string} board - The board.
- * @param {number} length - How many entries to get.
+ * This function is deprecated, use threadReplies
+ * @param {string} board - unused
+ * @param {number} length - unused
  * @param {number} id - ID of the thread.
  * @param {dangerucallback} callback - This is called when the XMLHttp request is completed.
 */
-_G.dangeru.thread = function(board, length, id, callback) {
-	if (typeof board !== "string" || typeof length !== "number" || typeof id !== "string" || typeof callback !== "function")
-		throw "Invalid type! Check your arguments, faggot.";
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
-            callback("success", JSON.parse(xmlHttp.responseText.replace(/[\r\n]+/g, "")), 200);
-		else if (xmlHttp.readyState === 4 && xmlHttp.status !== 200)
-			callback("error", {}, xmlHttp.status);
-    }
-    xmlHttp.open("GET", `https://boards.dangeru.us/api.php?type=thread&board=${board}&ln=${length}&id=${id}`, true);
-    xmlHttp.send(null);
+_G.dangeru.thread = function thread(board, length, id, callback) {
+    if (typeof board !== "string" || typeof length !== "number" || typeof id !== "string" || typeof callback !== "function")
+	    throw "Invalid type! Check your arguments, faggot.";
+    return _G.dangeru.threadReplies(id, callback);
+}
+/**
+ * Gets the replies to a thread asynchronously
+ * @param {number} id - ID of the thread.
+ * @param {dangerucallback} callback - This is called when the XMLHttp request is completed.
+*/
+_G.dangeru.threadReplies = function threadReplies(id, callback) {
+    if (typeof id !== "string" || typeof callback !== "function") throw "Invalid type! Check your arguments, faggot.";
+    setTimeout(function() {
+	callback.apply(null, _G.dangeru.threadRepliesSync(id));
+    }, 0);
+}
+/**
+ * Gets the metadata of a thread asynchronously
+ * @param {number} id - ID of the thread.
+ * @param {dangerucallback} callback - This is called when the XMLHttp request is completed.
+*/
+_G.dangeru.threadMetadata = function threadMetadata(id, callback) {
+    if (typeof id !== "string" || typeof callback !== "function") throw "Invalid type! Check your arguments, faggot.";
+    setTimeout(function() {
+	callback.apply(null, _G.dangeru.threadMetadataSync(id));
+    }, 0);
 }
 /**
  * Gets a board's posts synchronously. Duh. DON'T USE THIS IN THE MAIN THREAD, YOU FUCKING DOLT!
  * @param {string} board - The board.
- * @param {number} length - How many entries to get.
+ * @param {number} page - The page, starts at 0. Optional argument
  * @returns {object} The threads and all. Dunno much more to describe this.
 */
-_G.dangeru.listSync = function(board, length) {
-	if (typeof board !== "string" || typeof length !== "number")
-		throw "Invalid type! Check your arguments, faggot.";
+_G.dangeru.listSync = function(board, page) {
+    if (page === undefined) page = 0;
+    if (typeof board !== "string" || typeof length !== "number") throw "Invalid type! Check your arguments, faggot.";
     var xmlHttp = new XMLHttpRequest();
-	xmlHttp.open( "GET",`https://boards.dangeru.us/api.php?type=index&board=${board}&ln=${length}`, false ); 
-    xmlHttp.send( null );
-    return JSON.parse(xmlHttp.responseText.replace(/[\r\n]+/g, ""));
-    //return xmlHttp.responseText;
+    xmlHttp.open("GET", "https://boards.dangeru.us/api/v2/board/" + board + "?page=" page.toString(), false); 
+    xmlHttp.send(null);
+    return [xmlHttp.status == 200 ? "success" : "error", JSON.parse(xmlHttp.responseText), xmlHttp.status];
 }
 /**
  * Gets a board's posts asynchronously.
  * @param {string} board - The board.
- * @param {number} length - How many entries to get.
+ * @param {number} page - The page, starts at 0. Optional argument
  * @param {dangerucallback} callback - This is called when the XMLHttp request is completed.
 */
-_G.dangeru.list = function(board, length, callback) {
-	if (typeof board !== "string" || typeof length !== "number" || typeof callback !== "function")
-		throw "Invalid type! Check your arguments, faggot.";
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
-            callback("success", JSON.parse(xmlHttp.responseText.replace(/[\r\n]+/g, "")), 200);
-		else if (xmlHttp.readyState === 4 && xmlHttp.status !== 200)
-			callback("error", {}, xmlHttp.status);
-    }
-    xmlHttp.open("GET", `https://boards.dangeru.us/api.php?type=index&board=${board}&ln=${length}`, true);
-    xmlHttp.send(null);
+_G.dangeru.list = function(board, page, callback) {
+    if (page === undefined) page = 0;
+    if (typeof board !== "string" || typeof length !== "number" || typeof callback !== "function")
+	throw "Invalid type! Check your arguments, faggot.";
+    setTimeout(function() {
+	callback.apply(null, _G.dangeru.listSync(board, page));
+    }, 0);
 }
 
 /**
