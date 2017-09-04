@@ -1,4 +1,5 @@
 # dangeru.rb
+[![Gem Version](https://badge.fury.io/rb/dangeru.svg)](https://badge.fury.io/rb/dangeru)
 
 A ruby wrapper for the Awoo / danger/u/ API.
 
