@@ -1,4 +1,4 @@
-(defproject dangeru-clj "1.0.0"
+(defproject dangeru-clj "2.0.0"
   :description "Someone who has largely forgotten how to use clojure trying to
                 make clojure bindings for the danger/u/ api"
   :url "https://github.com/dangeru/api-wrappers"

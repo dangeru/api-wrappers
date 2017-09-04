@@ -50,5 +50,5 @@ To use this with an older version of any of the above, modify project.clj and kn
 [![Clojars Project](https://img.shields.io/clojars/v/dangeru-clj.svg)](https://clojars.org/dangeru-clj)  
 [Official API Guide](https://github.com/dangeru/awoo-API)  
 [C# Wrapper](https://github.com/Mark9870/dangeru-net)  
-[Other Wrappers (soon to include this one)](https://github.com/dangeru/api-wrappers)  
+[Other Wrappers](https://github.com/dangeru/api-wrappers)  
 [Danger/u/](https://dangeru.us/)  
