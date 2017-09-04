@@ -12,3 +12,7 @@ Credit: iowa
 
 **dangeru.clj**
 Credit: kudo-mirei
+
+
+**dangeru.rb**
+Credit: prefetcher
