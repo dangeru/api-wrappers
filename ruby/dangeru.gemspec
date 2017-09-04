@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'dangeru'
-  s.version     = '0.0.1'
+  s.version     = '1.0.0'
   s.date        = '2017-09-04'
   s.summary     = "dangeru.rb"
   s.description = "Awoo / danger/u/ API wrapper for ruby"
