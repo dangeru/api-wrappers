@@ -9,6 +9,6 @@ Gem::Specification.new do |s|
   s.files       = ["lib/dangeru.rb"]
   s.homepage    = 'http://rubygems.org/gems/dangeru'
   s.license       = 'MIT'
-  s.add_runtime_dependency 'json', '~> 0'
-  s.add_runtime_dependency 'http-cookie', '~> 1.0', '>= 1.0.0'
+  s.add_runtime_dependency 'json', '>= 0'
+  s.add_runtime_dependency 'http-cookie', '>= 1.0'
 end
