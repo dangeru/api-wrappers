@@ -12,7 +12,7 @@ index a board
 @param {string} page - which page to show, starts at 0
 @returns JSON formatted into a dictionary
 '''
-def index(board, page):
+def index(board, page = 0):
     return json.loads(requests.get("https://boards.dangeru.us/api/v2/board/" + board + "?page=" + str(page)).text)
 
 '''
