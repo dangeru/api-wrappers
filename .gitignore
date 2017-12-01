@@ -1,3 +1,4 @@
 python/__pycache__/
 python/build/
-python/setup.py
+python/MANIFEST
+python/dist/
